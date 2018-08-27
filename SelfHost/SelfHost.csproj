@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{30E38B33-0EA2-4A82-99AC-1B706EF0EEDA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SelfHost</RootNamespace>
+    <AssemblyName>SelfHost</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.8.7.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.7\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleNetNlp, Version=3.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleNetNlp.3.8.0\lib\SimpleNetNlp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.SelfHost, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.SelfHost.5.2.6\lib\net45\System.Web.Http.SelfHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Entity.cs" />
+    <Compile Include="Controllers\EntityController.cs" />
+    <Compile Include="NLP.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="nlp-models\lexparser\englishPCFG.ser.gz" />
+    <None Include="nlp-models\sentiment\sentiment.ser.gz" />
+    <None Include="Models\packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="nlp-libs\ejml-0.23.dll" />
+    <Content Include="nlp-libs\IKVM.AWT.WinForms.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Beans.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Charsets.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Cldrdata.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Corba.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Core.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Jdbc.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Localedata.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Management.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Media.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Misc.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Naming.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Nashorn.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Remoting.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Security.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.SwingAWT.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Text.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Tools.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.Util.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.API.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.Bind.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.Crypto.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.Parse.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.Transform.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.WebServices.dll" />
+    <Content Include="nlp-libs\IKVM.OpenJDK.XML.XPath.dll" />
+    <Content Include="nlp-libs\IKVM.Runtime.dll" />
+    <Content Include="nlp-libs\IKVM.Runtime.JNI.dll" />
+    <Content Include="nlp-libs\javax.json.dll" />
+    <Content Include="nlp-libs\joda-time.dll" />
+    <Content Include="nlp-libs\jollyday.dll" />
+    <Content Include="nlp-libs\protobuf.dll" />
+    <Content Include="nlp-libs\slf4j-api.dll" />
+    <Content Include="nlp-libs\slf4j-simple.dll" />
+    <Content Include="nlp-libs\stanford-corenlp-3.8.0.dll" />
+    <Content Include="nlp-libs\xom.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\SimpleNetNlp.3.8.0\build\SimpleNetNlp.targets" Condition="Exists('..\packages\SimpleNetNlp.3.8.0\build\SimpleNetNlp.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\SimpleNetNlp.3.8.0\build\SimpleNetNlp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SimpleNetNlp.3.8.0\build\SimpleNetNlp.targets'))" />
+    <Error Condition="!Exists('..\packages\SimpleNetNlp.Models.LexParser.3.8.0\build\SimpleNetNlp.Models.LexParser.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SimpleNetNlp.Models.LexParser.3.8.0\build\SimpleNetNlp.Models.LexParser.targets'))" />
+    <Error Condition="!Exists('..\packages\SimpleNetNlp.Models.Sentiment.3.8.0\build\SimpleNetNlp.Models.Sentiment.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SimpleNetNlp.Models.Sentiment.3.8.0\build\SimpleNetNlp.Models.Sentiment.targets'))" />
+  </Target>
+  <Import Project="..\packages\SimpleNetNlp.Models.LexParser.3.8.0\build\SimpleNetNlp.Models.LexParser.targets" Condition="Exists('..\packages\SimpleNetNlp.Models.LexParser.3.8.0\build\SimpleNetNlp.Models.LexParser.targets')" />
+  <Import Project="..\packages\SimpleNetNlp.Models.Sentiment.3.8.0\build\SimpleNetNlp.Models.Sentiment.targets" Condition="Exists('..\packages\SimpleNetNlp.Models.Sentiment.3.8.0\build\SimpleNetNlp.Models.Sentiment.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
