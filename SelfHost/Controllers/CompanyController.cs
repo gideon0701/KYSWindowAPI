@@ -7,10 +7,10 @@
     using System.Web.Http;
     using SimpleNetNlp;
     using HtmlAgilityPack;
-    public class ProductsController : ApiController
+    public class CompanyController : ApiController
     {
-        Entity CompanyEntity = new Entity { };
-        public Entity GetCompany(string name)
+        CompanyModel CompanyEntity = new CompanyModel { };
+        public CompanyModel GetCompany(string name)
         {
             CompanyEntity.CompanyName = name;
             Console.WriteLine(CompanyEntity.CompanyName);

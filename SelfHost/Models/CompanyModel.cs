@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SelfHost
 {
-    public class Entity
+    public class CompanyModel
     {
         public string CompanyName { get; set; }
         public List<string> Links { get; set; }
