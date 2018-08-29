@@ -22,7 +22,7 @@
 
             var strNewsUrl = "https://www.reuters.com/";
             var strQuery = "search/news?blob=";
-            var strClientName = "ayala+land";
+            var strClientName = name;
 
             var strUrl = strNewsUrl + strQuery + strClientName;
             HtmlWeb web = new HtmlWeb();
@@ -34,8 +34,6 @@
                 .Select(node => node.FirstChild)
                 .ToList();
 
-            //List<string> links = new List<string>();
-            //List<string> linkSentiments = new List<string>(); 
             foreach (var res in results)
             {
                 var headLines = res.InnerText;
@@ -43,7 +41,8 @@
                 companyModel.Headlines.Add(headLines);
                 companyModel.HeadlinesSentiment.Add(new Sentence(headLines).Sentiment.ToString());
             }
-                
+
+
             companyModel.RiskScore = 123;
             return companyModel;
         }
