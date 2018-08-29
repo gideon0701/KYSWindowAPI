@@ -15,20 +15,26 @@ namespace SelfHost
 
         static void Main(string[] args)
         {
-        var config = new HttpSelfHostConfiguration("http://localhost:23123");
+            var config = new HttpSelfHostConfiguration("http://localhost:23123");
 
-        config.Routes.MapHttpRoute(
-            "API Default", "api/{controller}/{id}",
-            new { id = RouteParameter.Optional });
-
-        using (HttpSelfHostServer server = new HttpSelfHostServer(config))
-        {
-                   server.OpenAsync().Wait();
-                Console.WriteLine(new Sentence("bad").Sentiment);
-                Console.Clear();
-                   Console.WriteLine("Press Enter to quit.");
-                   Console.ReadLine();
+            config.Routes.MapHttpRoute(
+                "API Default", "api/{controller}/{id}",
+                new { id = RouteParameter.Optional });
+            try
+            {
+                using (HttpSelfHostServer server = new HttpSelfHostServer(config))
+                {
+                    server.OpenAsync().Wait();
+                    Console.WriteLine(new Sentence("bad").Sentiment);
+                    Console.Clear();
+                    Console.WriteLine("Press Enter to quit.");
+                    Console.ReadLine();
+                }
+            }
+            catch (Exception e) {
+                Console.WriteLine(e);
+            }
+          
         }
-    }
     }
 }

@@ -9,37 +9,43 @@
     using HtmlAgilityPack;
     public class CompanyController : ApiController
     {
-        CompanyModel CompanyEntity = new CompanyModel { };
+        CompanyModel companyModel;
         public CompanyModel GetCompany(string name)
         {
-            CompanyEntity.CompanyName = name;
-            Console.WriteLine(CompanyEntity.CompanyName);
 
+            companyModel = new CompanyModel();
 
-            var html = @"http://google.com/search?q=";
-            var search = html + name;
+            companyModel.CompanyName = name;
+            companyModel.Links = new List<string>();
+            companyModel.HeadlinesSentiment = new List<string>();
+            companyModel.Headlines = new List<string>();
+
+            var strNewsUrl = "https://www.reuters.com/";
+            var strQuery = "search/news?blob=";
+            var strClientName = "ayala+land";
+
+            var strUrl = strNewsUrl + strQuery + strClientName;
             HtmlWeb web = new HtmlWeb();
-            var htmlDoc = web.Load(search);
+            var htmlDoc = web.Load(strUrl);
 
-            var results = htmlDoc.DocumentNode.Descendants("h3").Where(node => node.GetAttributeValue("class", "").Equals("r")).ToList();
+            var xpath = "//*[self::h1 or self::h2 or self::h3 or self::h4]";
+            var results = htmlDoc.DocumentNode.SelectNodes(xpath)
+                .Where(node => node.GetAttributeValue("class", "").Contains("result"))
+                .Select(node => node.FirstChild)
+                .ToList();
 
-            List<string> links = new List<string>();
-            List<string> linkSentiments = new List<string>(); 
-            int i = 0;
+            //List<string> links = new List<string>();
+            //List<string> linkSentiments = new List<string>(); 
             foreach (var res in results)
             {
-                links.Add(res.Descendants("a").FirstOrDefault().ChildAttributes("href").First().Value.Substring(7).Split('&').First());
-                linkSentiments.Add(new Sentence(links[i]).Sentiment.ToString());
-                Console.WriteLine(links[i]);
-                Console.WriteLine(linkSentiments[i]);
-
-                i++;
+                var headLines = res.InnerText;
+                Console.WriteLine(new Sentence(headLines).Sentiment);
+                companyModel.Headlines.Add(headLines);
+                companyModel.HeadlinesSentiment.Add(new Sentence(headLines).Sentiment.ToString());
             }
-
-            CompanyEntity.Links = links;
-            CompanyEntity.LinkSentiments = linkSentiments;
-            CompanyEntity.RiskScore = 123;
-            return CompanyEntity;
+                
+            companyModel.RiskScore = 123;
+            return companyModel;
         }
 
     }

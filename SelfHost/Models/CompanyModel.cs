@@ -10,7 +10,8 @@ namespace SelfHost
     {
         public string CompanyName { get; set; }
         public List<string> Links { get; set; }
-        public List<string> LinkSentiments { get; set; }
+        public List<string> HeadlinesSentiment { get; set; }
+        public List<string> Headlines { get; set; }
         public int RiskScore { get; set; }
 
     }
