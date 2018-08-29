@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="KYCAIS_DEVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="company">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+          <Property Name="established_date" Type="int" />
+          <Property Name="company_address" Type="varchar" MaxLength="150" />
+          <Property Name="website_url" Type="varchar" MaxLength="80" />
+          <Property Name="email_address" Type="varchar" MaxLength="80" />
+          <Property Name="country" Type="varchar" MaxLength="50" />
+          <Property Name="industry_id" Type="int" />
+          <Property Name="sector_id" Type="int" />
+          <Property Name="is_blacklisted" Type="bit" />
+        </EntityType>
+        <EntityType Name="doctype">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+          <Property Name="is_required" Type="bit" />
+        </EntityType>
+        <EntityType Name="documents">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="doctype_id" Type="int" />
+          <Property Name="linked_company_id" Type="int" />
+          <Property Name="doc_path" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="industry">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="PersonEntities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+          <Property Name="linked_company_id" Type="int" />
+          <Property Name="is_hit" Type="bit" />
+          <Property Name="risk_rating" Type="int" />
+          <Property Name="santion_source" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="search_sites">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+          <Property Name="url" Type="varchar" MaxLength="250" />
+          <Property Name="source" Type="varchar" MaxLength="200" />
+          <Property Name="appendString" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="sector">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__company__industr__239E4DCF">
+          <End Role="industry" Type="Self.industry" Multiplicity="0..1" />
+          <End Role="company" Type="Self.company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="industry">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="company">
+              <PropertyRef Name="industry_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__company__sector___24927208">
+          <End Role="sector" Type="Self.sector" Multiplicity="0..1" />
+          <End Role="company" Type="Self.company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sector">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="company">
+              <PropertyRef Name="sector_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__documents__docty__37A5467C">
+          <End Role="doctype" Type="Self.doctype" Multiplicity="0..1" />
+          <End Role="documents" Type="Self.documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctype">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="doctype_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__documents__linke__31EC6D26">
+          <End Role="company" Type="Self.company" Multiplicity="0..1" />
+          <End Role="documents" Type="Self.documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="linked_company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PersonEnt__linke__2D27B809">
+          <End Role="company" Type="Self.company" Multiplicity="0..1" />
+          <End Role="PersonEntities" Type="Self.PersonEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PersonEntities">
+              <PropertyRef Name="linked_company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KYCAIS_DEVModelStoreContainer">
+          <EntitySet Name="company" EntityType="Self.company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="doctype" EntityType="Self.doctype" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="documents" EntityType="Self.documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="industry" EntityType="Self.industry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonEntities" EntityType="Self.PersonEntities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="search_sites" EntityType="Self.search_sites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sector" EntityType="Self.sector" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__company__industr__239E4DCF" Association="Self.FK__company__industr__239E4DCF">
+            <End Role="industry" EntitySet="industry" />
+            <End Role="company" EntitySet="company" />
+          </AssociationSet>
+          <AssociationSet Name="FK__company__sector___24927208" Association="Self.FK__company__sector___24927208">
+            <End Role="sector" EntitySet="sector" />
+            <End Role="company" EntitySet="company" />
+          </AssociationSet>
+          <AssociationSet Name="FK__documents__docty__37A5467C" Association="Self.FK__documents__docty__37A5467C">
+            <End Role="doctype" EntitySet="doctype" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__documents__linke__31EC6D26" Association="Self.FK__documents__linke__31EC6D26">
+            <End Role="company" EntitySet="company" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PersonEnt__linke__2D27B809" Association="Self.FK__PersonEnt__linke__2D27B809">
+            <End Role="company" EntitySet="company" />
+            <End Role="PersonEntities" EntitySet="PersonEntities" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KYCAIS_DEVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="company">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="established_date" Type="Int32" />
+          <Property Name="company_address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="website_url" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="email_address" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="industry_id" Type="Int32" />
+          <Property Name="sector_id" Type="Int32" />
+          <Property Name="is_blacklisted" Type="Boolean" />
+          <NavigationProperty Name="industry" Relationship="Self.FK__company__industr__239E4DCF" FromRole="company" ToRole="industry" />
+          <NavigationProperty Name="sector" Relationship="Self.FK__company__sector___24927208" FromRole="company" ToRole="sector" />
+          <NavigationProperty Name="documents" Relationship="Self.FK__documents__linke__31EC6D26" FromRole="company" ToRole="documents" />
+          <NavigationProperty Name="PersonEntities" Relationship="Self.FK__PersonEnt__linke__2D27B809" FromRole="company" ToRole="PersonEntities" />
+        </EntityType>
+        <EntityType Name="doctype">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="is_required" Type="Boolean" />
+          <NavigationProperty Name="documents" Relationship="Self.FK__documents__docty__37A5467C" FromRole="doctype" ToRole="documents" />
+        </EntityType>
+        <EntityType Name="document">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="doctype_id" Type="Int32" />
+          <Property Name="linked_company_id" Type="Int32" />
+          <Property Name="doc_path" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="company" Relationship="Self.FK__documents__linke__31EC6D26" FromRole="documents" ToRole="company" />
+          <NavigationProperty Name="doctype" Relationship="Self.FK__documents__docty__37A5467C" FromRole="documents" ToRole="doctype" />
+        </EntityType>
+        <EntityType Name="industry">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="companies" Relationship="Self.FK__company__industr__239E4DCF" FromRole="industry" ToRole="company" />
+        </EntityType>
+        <EntityType Name="PersonEntity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="linked_company_id" Type="Int32" />
+          <Property Name="is_hit" Type="Boolean" />
+          <Property Name="risk_rating" Type="Int32" />
+          <Property Name="santion_source" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="company" Relationship="Self.FK__PersonEnt__linke__2D27B809" FromRole="PersonEntities" ToRole="company" />
+        </EntityType>
+        <EntityType Name="search_sites">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="url" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="source" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="appendString" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="sector">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="companies" Relationship="Self.FK__company__sector___24927208" FromRole="sector" ToRole="company" />
+        </EntityType>
+        <Association Name="FK__company__industr__239E4DCF">
+          <End Role="industry" Type="Self.industry" Multiplicity="0..1" />
+          <End Role="company" Type="Self.company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="industry">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="company">
+              <PropertyRef Name="industry_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__company__sector___24927208">
+          <End Role="sector" Type="Self.sector" Multiplicity="0..1" />
+          <End Role="company" Type="Self.company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sector">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="company">
+              <PropertyRef Name="sector_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__documents__linke__31EC6D26">
+          <End Role="company" Type="Self.company" Multiplicity="0..1" />
+          <End Role="documents" Type="Self.document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="linked_company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PersonEnt__linke__2D27B809">
+          <End Role="company" Type="Self.company" Multiplicity="0..1" />
+          <End Role="PersonEntities" Type="Self.PersonEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PersonEntities">
+              <PropertyRef Name="linked_company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__documents__docty__37A5467C">
+          <End Role="doctype" Type="Self.doctype" Multiplicity="0..1" />
+          <End Role="documents" Type="Self.document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctype">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="doctype_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KYCAIS_DEVEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="companies" EntityType="Self.company" />
+          <EntitySet Name="doctypes" EntityType="Self.doctype" />
+          <EntitySet Name="documents" EntityType="Self.document" />
+          <EntitySet Name="industries" EntityType="Self.industry" />
+          <EntitySet Name="PersonEntities" EntityType="Self.PersonEntity" />
+          <EntitySet Name="search_sites" EntityType="Self.search_sites" />
+          <EntitySet Name="sectors" EntityType="Self.sector" />
+          <AssociationSet Name="FK__company__industr__239E4DCF" Association="Self.FK__company__industr__239E4DCF">
+            <End Role="industry" EntitySet="industries" />
+            <End Role="company" EntitySet="companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__company__sector___24927208" Association="Self.FK__company__sector___24927208">
+            <End Role="sector" EntitySet="sectors" />
+            <End Role="company" EntitySet="companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__documents__linke__31EC6D26" Association="Self.FK__documents__linke__31EC6D26">
+            <End Role="company" EntitySet="companies" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PersonEnt__linke__2D27B809" Association="Self.FK__PersonEnt__linke__2D27B809">
+            <End Role="company" EntitySet="companies" />
+            <End Role="PersonEntities" EntitySet="PersonEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__documents__docty__37A5467C" Association="Self.FK__documents__docty__37A5467C">
+            <End Role="doctype" EntitySet="doctypes" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KYCAIS_DEVModelStoreContainer" CdmEntityContainer="KYCAIS_DEVEntities">
+          <EntitySetMapping Name="companies">
+            <EntityTypeMapping TypeName="KYCAIS_DEVModel.company">
+              <MappingFragment StoreEntitySet="company">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="established_date" ColumnName="established_date" />
+                <ScalarProperty Name="company_address" ColumnName="company_address" />
+                <ScalarProperty Name="website_url" ColumnName="website_url" />
+                <ScalarProperty Name="email_address" ColumnName="email_address" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="industry_id" ColumnName="industry_id" />
+                <ScalarProperty Name="sector_id" ColumnName="sector_id" />
+                <ScalarProperty Name="is_blacklisted" ColumnName="is_blacklisted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="doctypes">
+            <EntityTypeMapping TypeName="KYCAIS_DEVModel.doctype">
+              <MappingFragment StoreEntitySet="doctype">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="is_required" ColumnName="is_required" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="documents">
+            <EntityTypeMapping TypeName="KYCAIS_DEVModel.document">
+              <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="doctype_id" ColumnName="doctype_id" />
+                <ScalarProperty Name="linked_company_id" ColumnName="linked_company_id" />
+                <ScalarProperty Name="doc_path" ColumnName="doc_path" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="industries">
+            <EntityTypeMapping TypeName="KYCAIS_DEVModel.industry">
+              <MappingFragment StoreEntitySet="industry">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonEntities">
+            <EntityTypeMapping TypeName="KYCAIS_DEVModel.PersonEntity">
+              <MappingFragment StoreEntitySet="PersonEntities">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="linked_company_id" ColumnName="linked_company_id" />
+                <ScalarProperty Name="is_hit" ColumnName="is_hit" />
+                <ScalarProperty Name="risk_rating" ColumnName="risk_rating" />
+                <ScalarProperty Name="santion_source" ColumnName="santion_source" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="search_sites">
+            <EntityTypeMapping TypeName="KYCAIS_DEVModel.search_sites">
+              <MappingFragment StoreEntitySet="search_sites">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="source" ColumnName="source" />
+                <ScalarProperty Name="appendString" ColumnName="appendString" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sectors">
+            <EntityTypeMapping TypeName="KYCAIS_DEVModel.sector">
+              <MappingFragment StoreEntitySet="sector">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

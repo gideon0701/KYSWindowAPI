@@ -12,7 +12,6 @@
         CompanyModel companyModel;
         public CompanyModel GetCompany(string name)
         {
-
             companyModel = new CompanyModel();
 
             companyModel.CompanyName = name;
