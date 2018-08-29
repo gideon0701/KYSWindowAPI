@@ -8,8 +8,10 @@ using System.Web.Http.SelfHost;
 using HtmlAgilityPack;
 using SimpleNetNlp;
 
+
 namespace SelfHost
 {
+ 
     class Program
     {
 
@@ -27,6 +29,9 @@ namespace SelfHost
                     server.OpenAsync().Wait();
                     Console.WriteLine(new Sentence("bad").Sentiment);
                     Console.Clear();
+                    Console.WriteLine("API is running at...");
+                    Console.Write(Utils.GetLocalIPAddress());
+                    Console.WriteLine(":23123");
                     Console.WriteLine("Press Enter to quit.");
                     Console.ReadLine();
                 }
