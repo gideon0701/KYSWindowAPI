@@ -27,7 +27,9 @@ namespace SelfHost
                         url = s.url,
                         source = s.source,
                         appendString = s.appendString
-                    }).ToList();
+                    })
+                    .OrderBy(q => q.id)
+                    .ToList();
             }
         }
 
