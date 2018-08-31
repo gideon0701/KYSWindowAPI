@@ -20,6 +20,7 @@ namespace SelfHost
             {
                 return db.search_sites
                     .AsNoTracking()
+                    .Where(q => q.source != null)
                     .Select(s => new SearchSitesModel
                     {
                         id = s.id,
