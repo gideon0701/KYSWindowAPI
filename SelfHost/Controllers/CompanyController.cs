@@ -47,7 +47,8 @@
                     foreach (var res in lstRes)
                     {
                         var headLines = intCnt <= 0 ? res.InnerText : res.ChildNodes[strHeadlineElem].InnerText;
-                        var link = res.Attributes["href"].Value;
+                        var str = res.Attributes["href"].Value;
+                        var link = str.StartsWith("/url") ? StringUtil.FormatLink(str) : str;
                         link = link.Contains("http") ? link : strNewsUrl + link;
 
                         companyModel.Headlines.Add(headLines);
@@ -73,8 +74,8 @@
             companyModel.Headlines = new List<string>();
 
 
-            var strNewsUrl = "https://www.thomsonreuters.com";
-            var strQuery = "/en/search-results.html?q=";
+            var strNewsUrl = "https://www.icij.org";
+            var strQuery = "/search/";
             var strClientName = test;
             var strUrl = strNewsUrl + strQuery + strClientName;
             HtmlWeb web = new HtmlWeb();
@@ -82,7 +83,8 @@
 
             var strElement = "div";
             var strCmpr = "title";
-            var xpath = $"//div[@class='tr-SearchResults-resultBody']";
+            var xpath = $"//p[@class='Post__category']";
+            var tests = htmlDoc.DocumentNode.InnerHtml;
             var results = htmlDoc.DocumentNode.SelectNodes(xpath);
             
             if (results != null)
