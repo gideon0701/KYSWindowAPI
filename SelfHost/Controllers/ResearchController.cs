@@ -18,12 +18,26 @@ namespace SelfHost
         /// Get the MainEntityModel
         /// </summary>
         public MainEntityModel GetList(string companyName) {
+            MainEntityModel model = new MainEntityModel();
+            model.subEntities = new List<SubEntityModel>();
+
             if (mainEntityModel.isAvailable(companyName))
             {
                 return mainEntityModel.getEntity(companyName);
             }
+            var dctSubMain = Utils.ner(StringUtil.getRelatedParties(companyName));
+            model.name = companyName;
+            foreach (var item in dctSubMain)
+            {
+                SubEntityModel subEntityModel = new SubEntityModel();
 
-            return mainEntityModel.getEntity(companyName);
+                subEntityModel.entityType_id = item.Value.Equals("PERSON") ? 2 : 1;
+                subEntityModel.name = item.Key;
+
+                model.subEntities.Add(subEntityModel);
+            }
+
+            return model;
         }
 
         /// <summary>

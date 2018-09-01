@@ -100,7 +100,7 @@
                 web = new HtmlWeb();
                 var htmlDoc2 = web.Load(link);
 
-                var nodes = htmlDoc2.DocumentNode.SelectNodes("//a");
+                var nodes = htmlDoc2.DocumentNode.SelectNodes("//p//a");
                 foreach (var node in nodes)
                 {
                     companyModel.Headlines.Add(node.InnerText);

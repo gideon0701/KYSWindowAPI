@@ -39,7 +39,7 @@ namespace SelfHost
 
             Dictionary<string, string> EntityDict = new Dictionary<string, string>();
             // Path to the folder with classifiers models
-            var jarRoot = @"C:\Users\CarloDp\Documents\NLP\NER\stanford-ner-2017-06-09";
+            var jarRoot = @"C:\Users\Gideon\Documents\stanford-ner-2017-06-09";
             var classifiersDirecrory = jarRoot + @"\classifiers";
             // Loading 7 class classifier model
             var classifier = CRFClassifier.getClassifierNoExceptions(
