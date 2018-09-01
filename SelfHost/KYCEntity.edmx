@@ -58,6 +58,15 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="newsSubEntity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="mainEntity_id" Type="int" />
+          <Property Name="newsHeadline" Type="varchar" MaxLength="1000" />
+          <Property Name="headlineLink" Type="varchar" MaxLength="1000" />
+        </EntityType>
         <EntityType Name="PersonEntities">
           <Key>
             <PropertyRef Name="id" />
@@ -143,6 +152,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__newsSubEn__mainE__74AE54BC">
+          <End Role="mainEntity" Type="Self.mainEntity" Multiplicity="0..1" />
+          <End Role="newsSubEntity" Type="Self.newsSubEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mainEntity">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="newsSubEntity">
+              <PropertyRef Name="mainEntity_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PersonEnt__linke__59063A47">
           <End Role="company" Type="Self.company" Multiplicity="0..1" />
           <End Role="PersonEntities" Type="Self.PersonEntities" Multiplicity="*" />
@@ -186,6 +207,7 @@
           <EntitySet Name="entityType" EntityType="Self.entityType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="industry" EntityType="Self.industry" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="mainEntity" EntityType="Self.mainEntity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="newsSubEntity" EntityType="Self.newsSubEntity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonEntities" EntityType="Self.PersonEntities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="search_sites" EntityType="Self.search_sites" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sector" EntityType="Self.sector" Schema="dbo" store:Type="Tables" />
@@ -205,6 +227,10 @@
           <AssociationSet Name="FK__documents__linke__571DF1D5" Association="Self.FK__documents__linke__571DF1D5">
             <End Role="company" EntitySet="company" />
             <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__newsSubEn__mainE__74AE54BC" Association="Self.FK__newsSubEn__mainE__74AE54BC">
+            <End Role="mainEntity" EntitySet="mainEntity" />
+            <End Role="newsSubEntity" EntitySet="newsSubEntity" />
           </AssociationSet>
           <AssociationSet Name="FK__PersonEnt__linke__59063A47" Association="Self.FK__PersonEnt__linke__59063A47">
             <End Role="company" EntitySet="company" />
@@ -390,10 +416,15 @@
           </AssociationSet>
           <EntitySet Name="entityTypes" EntityType="KYCAIS_DEVModel.entityType" />
           <EntitySet Name="mainEntities" EntityType="KYCAIS_DEVModel.mainEntity" />
+          <EntitySet Name="newsSubEntities" EntityType="KYCAIS_DEVModel.newsSubEntity" />
           <EntitySet Name="subEntities" EntityType="KYCAIS_DEVModel.subEntity" />
           <AssociationSet Name="FK__subEntity__entit__71D1E811" Association="KYCAIS_DEVModel.FK__subEntity__entit__71D1E811">
             <End Role="entityType" EntitySet="entityTypes" />
             <End Role="subEntity" EntitySet="subEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__newsSubEn__mainE__74AE54BC" Association="KYCAIS_DEVModel.FK__newsSubEn__mainE__74AE54BC">
+            <End Role="mainEntity" EntitySet="mainEntities" />
+            <End Role="newsSubEntity" EntitySet="newsSubEntities" />
           </AssociationSet>
           <AssociationSet Name="FK__subEntity__mainE__70DDC3D8" Association="KYCAIS_DEVModel.FK__subEntity__mainE__70DDC3D8">
             <End Role="mainEntity" EntitySet="mainEntities" />
@@ -414,7 +445,18 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="newsSubEntities" Relationship="KYCAIS_DEVModel.FK__newsSubEn__mainE__74AE54BC" FromRole="mainEntity" ToRole="newsSubEntity" />
           <NavigationProperty Name="subEntities" Relationship="KYCAIS_DEVModel.FK__subEntity__mainE__70DDC3D8" FromRole="mainEntity" ToRole="subEntity" />
+        </EntityType>
+        <EntityType Name="newsSubEntity">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="mainEntity_id" Type="Int32" />
+          <Property Name="newsHeadline" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="headlineLink" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="mainEntity" Relationship="KYCAIS_DEVModel.FK__newsSubEn__mainE__74AE54BC" FromRole="newsSubEntity" ToRole="mainEntity" />
         </EntityType>
         <EntityType Name="subEntity">
           <Key>
@@ -436,6 +478,18 @@
             </Principal>
             <Dependent Role="subEntity">
               <PropertyRef Name="entityType_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__newsSubEn__mainE__74AE54BC">
+          <End Type="KYCAIS_DEVModel.mainEntity" Role="mainEntity" Multiplicity="0..1" />
+          <End Type="KYCAIS_DEVModel.newsSubEntity" Role="newsSubEntity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mainEntity">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="newsSubEntity">
+              <PropertyRef Name="mainEntity_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -543,6 +597,16 @@
             <EntityTypeMapping TypeName="KYCAIS_DEVModel.mainEntity">
               <MappingFragment StoreEntitySet="mainEntity">
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="newsSubEntities">
+            <EntityTypeMapping TypeName="KYCAIS_DEVModel.newsSubEntity">
+              <MappingFragment StoreEntitySet="newsSubEntity">
+                <ScalarProperty Name="headlineLink" ColumnName="headlineLink" />
+                <ScalarProperty Name="newsHeadline" ColumnName="newsHeadline" />
+                <ScalarProperty Name="mainEntity_id" ColumnName="mainEntity_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
