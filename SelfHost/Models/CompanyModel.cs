@@ -12,6 +12,7 @@ namespace SelfHost
         public List<string> Links { get; set; }
         public List<string> HeadlinesSentiment { get; set; }
         public List<string> Headlines { get; set; }
+        public List<string> HeadlineNER { get; set; }
         public int RiskScore { get; set; }
 
     }

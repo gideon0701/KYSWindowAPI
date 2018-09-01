@@ -32,5 +32,9 @@ namespace SelfHost
         public virtual DbSet<PersonEntity> PersonEntities { get; set; }
         public virtual DbSet<search_sites> search_sites { get; set; }
         public virtual DbSet<sector> sectors { get; set; }
+        public virtual DbSet<entityType> entityTypes { get; set; }
+        public virtual DbSet<mainEntity> mainEntities { get; set; }
+        public virtual DbSet<newsSubEntity> newsSubEntities { get; set; }
+        public virtual DbSet<subEntity> subEntities { get; set; }
     }
 }

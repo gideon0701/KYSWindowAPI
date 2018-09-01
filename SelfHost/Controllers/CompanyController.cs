@@ -7,6 +7,8 @@
     using System.Web.Http;
     using SimpleNetNlp;
     using HtmlAgilityPack;
+    using edu.stanford.nlp.ie.crf;
+
     public class CompanyController : ApiController
     {
         CompanyModel companyModel;
@@ -59,8 +61,26 @@
                 
             }
 
+            //get xml formated NER for headlines 
+            ner(companyModel.Headlines);
+           
             companyModel.RiskScore = 123;
             return companyModel;
+        }
+
+        public List<string> ner(List<string> headLines)
+        {
+            List<string> hL = new List<string>();
+            string jarRoot = @"C:\Users\CarloDp\Documents\NLP\NER\stanford-ner-2017-06-09";
+            string classifiersDirecrory = jarRoot + @"\classifiers";
+            var classifier = CRFClassifier.getClassifierNoExceptions(classifiersDirecrory + @"\english.muc.7class.distsim.crf.ser.gz");
+            foreach (var item in headLines)
+            {
+                hL.Add(classifier.classifyWithInlineXML(item));
+
+            }
+
+            return hL;
         }
 
         public CompanyModel GetTest(string test)
@@ -81,8 +101,8 @@
             HtmlWeb web = new HtmlWeb();
             var htmlDoc = web.Load(strUrl);
 
-            var strElement = "div";
-            var strCmpr = "title";
+           // var strElement = "div";
+           // var strCmpr = "title";
             var xpath = $"//p[@class='Post__category']";
             var tests = htmlDoc.DocumentNode.InnerHtml;
             var results = htmlDoc.DocumentNode.SelectNodes(xpath);
