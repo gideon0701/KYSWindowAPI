@@ -229,6 +229,7 @@
     <Compile Include="company.cs">
       <DependentUpon>KYCEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\ResearchController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="doctype.cs">
       <DependentUpon>KYCEntity.tt</DependentUpon>
@@ -261,7 +262,11 @@
       <DependentUpon>KYCEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CompanyModel.cs" />
+    <Compile Include="Models\EntityTypeModel.cs" />
+    <Compile Include="Models\MainEntityModel.cs" />
+    <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\SearchSitesModel.cs" />
+    <Compile Include="Models\SubEntityModel.cs" />
     <Compile Include="newsSubEntity.cs">
       <DependentUpon>KYCEntity.tt</DependentUpon>
     </Compile>
