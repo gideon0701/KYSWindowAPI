@@ -81,11 +81,15 @@
     <Compile Include="company.cs">
       <DependentUpon>KYCEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\ResearchController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="doctype.cs">
       <DependentUpon>KYCEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="document.cs">
+      <DependentUpon>KYCEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entityType.cs">
       <DependentUpon>KYCEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="industry.cs">
@@ -106,8 +110,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>KYCEntity.edmx</DependentUpon>
     </Compile>
+    <Compile Include="mainEntity.cs">
+      <DependentUpon>KYCEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CompanyModel.cs" />
+    <Compile Include="Models\EntityTypeModel.cs" />
+    <Compile Include="Models\MainEntityModel.cs" />
+    <Compile Include="Models\ReportModel.cs" />
     <Compile Include="Models\SearchSitesModel.cs" />
+    <Compile Include="Models\SubEntityModel.cs" />
     <Compile Include="NLP.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="PersonEntity.cs">
@@ -119,6 +130,9 @@
       <DependentUpon>KYCEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="sector.cs">
+      <DependentUpon>KYCEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="subEntity.cs">
       <DependentUpon>KYCEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Utils\StringUtil.cs" />

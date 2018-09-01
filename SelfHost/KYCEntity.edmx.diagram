@@ -17,6 +17,11 @@
         <AssociationConnector Association="KYCAIS_DEVModel.FK__documents__linke__31EC6D26" ManuallyRouted="false" />
         <AssociationConnector Association="KYCAIS_DEVModel.FK__PersonEnt__linke__2D27B809" ManuallyRouted="false" />
         <AssociationConnector Association="KYCAIS_DEVModel.FK__documents__docty__37A5467C" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="KYCAIS_DEVModel.entityType" Width="1.5" PointX="7.375" PointY="5.25" />
+        <EntityTypeShape EntityType="KYCAIS_DEVModel.mainEntity" Width="1.5" PointX="8.375" PointY="7.625" />
+        <EntityTypeShape EntityType="KYCAIS_DEVModel.subEntity" Width="1.5" PointX="9.625" PointY="4.875" />
+        <AssociationConnector Association="KYCAIS_DEVModel.FK__subEntity__entit__71D1E811" />
+        <AssociationConnector Association="KYCAIS_DEVModel.FK__subEntity__mainE__70DDC3D8" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
