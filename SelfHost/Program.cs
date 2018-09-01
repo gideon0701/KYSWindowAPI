@@ -28,7 +28,6 @@ namespace SelfHost
                 {
                     server.OpenAsync().Wait();
                     Console.WriteLine(new Sentence("bad").Sentiment);
-                   
                     Console.Clear();
                     Console.WriteLine("API is running at...");
                     Console.Write(Utils.GetLocalIPAddress());

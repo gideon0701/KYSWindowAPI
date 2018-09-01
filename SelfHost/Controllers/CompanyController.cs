@@ -8,6 +8,7 @@
     using SimpleNetNlp;
     using HtmlAgilityPack;
     using edu.stanford.nlp.ie.crf;
+    using System.Xml;
 
     public class CompanyController : ApiController
     {
@@ -62,7 +63,7 @@
             }
 
             //get xml formated NER for headlines 
-            ner(companyModel.Headlines);
+             companyModel.Headlines = ner(companyModel.Headlines);
            
             companyModel.RiskScore = 123;
             return companyModel;
