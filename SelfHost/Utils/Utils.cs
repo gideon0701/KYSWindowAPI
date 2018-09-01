@@ -33,7 +33,7 @@ namespace SelfHost
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
-        public static Dictionary<string,string> ner(string content)
+        public static Dictionary<string,string> ner(List<string> content)
         {
 
 
@@ -45,7 +45,13 @@ namespace SelfHost
             var classifier = CRFClassifier.getClassifierNoExceptions(
                 classifiersDirecrory + @"\english.muc.7class.distsim.crf.ser.gz");
             // Applying ner tagging and saving to xml string
-            var ner = classifier.classifyWithInlineXML(content);
+            string ner = "";
+
+            foreach (var item in content)
+            {
+                ner += classifier.classifyWithInlineXML(item);
+
+            }
             // Adding root  
             ner = "<root>" + ner + "</root>";
             // Converting to Xml document
@@ -58,34 +64,62 @@ namespace SelfHost
 
                 if (entity == "ORGANIZATION")
                 {
-                    EntityDict.Add(item.InnerText, entity);
+                    if (!EntityDict.ContainsKey(item.InnerText))
+                    {
+                        EntityDict.Add(item.InnerText, entity);
+                    }
+
+
                 }
                 if (entity == "LOCATION")
                 {
-                    EntityDict.Add(item.InnerText, entity);
+                    if (!EntityDict.ContainsKey(item.InnerText))
+                    {
+                        EntityDict.Add(item.InnerText, entity);
+                    }
+
 
                 }
                 if (entity == "PERSON")
                 {
-                    EntityDict.Add(item.InnerText, entity);
+                    if (!EntityDict.ContainsKey(item.InnerText))
+                    {
+                        EntityDict.Add(item.InnerText, entity);
+                    }
+
 
                 }
                 if (entity == "MONEY")
                 {
-                    EntityDict.Add(item.InnerText, entity);
+                    if (!EntityDict.ContainsKey(item.InnerText))
+                    {
+                        EntityDict.Add(item.InnerText, entity);
+                    }
 
                 }
                 if (entity == "DATE")
                 {
-                    EntityDict.Add(item.InnerText, entity);
+                    if (!EntityDict.ContainsKey(item.InnerText))
+                    {
+                        EntityDict.Add(item.InnerText, entity);
+                    }
+
                 }
                 if (entity == "PERCENT")
                 {
-                    EntityDict.Add(item.InnerText, entity);
+                    if (!EntityDict.ContainsKey(item.InnerText))
+                    {
+                        EntityDict.Add(item.InnerText, entity);
+                    }
+
                 }
                 if (entity == "TIME")
                 {
-                    EntityDict.Add(item.InnerText, entity);
+                    if (!EntityDict.ContainsKey(item.InnerText))
+                    {
+                        EntityDict.Add(item.InnerText, entity);
+                    }
+
 
                 }
             }
