@@ -63,7 +63,7 @@
             }
 
             //get xml formated NER for headlines 
-             companyModel.Headlines = ner(companyModel.Headlines);
+            //companyModel.Headlines = ner(companyModel.Headlines);
            
             companyModel.RiskScore = 123;
             return companyModel;

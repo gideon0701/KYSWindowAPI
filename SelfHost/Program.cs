@@ -17,6 +17,9 @@ namespace SelfHost
 
         static void Main(string[] args)
         {
+
+
+
             var config = new HttpSelfHostConfiguration("http://localhost:23123");
 
             config.Routes.MapHttpRoute(
@@ -36,10 +39,11 @@ namespace SelfHost
                     Console.ReadLine();
                 }
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Console.WriteLine(e);
             }
-          
+
         }
     }
 }
