@@ -18,6 +18,10 @@ namespace SelfHost
         /// Get the MainEntityModel
         /// </summary>
         public MainEntityModel GetList(string companyName) {
+            if (mainEntityModel.isAvailable(companyName))
+            {
+                return mainEntityModel.getEntity(companyName);
+            }
 
             return mainEntityModel.getEntity(companyName);
         }

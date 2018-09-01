@@ -44,19 +44,24 @@
                 if (results != null)
                 {
                     var lstRes = results.Select(node => node.ChildNodes["a"]).ToList();
+
                     foreach (var res in lstRes)
                     {
                         var headLines = intCnt <= 0 ? res.InnerText : res.ChildNodes[strHeadlineElem].InnerText;
+                        var strSenti = new Sentence(headLines).Sentiment.ToString();
                         var str = res.Attributes["href"].Value;
                         var link = str.StartsWith("/url") ? StringUtil.FormatLink(str) : str;
                         link = link.Contains("http") ? link : strNewsUrl + link;
 
-                        companyModel.Headlines.Add(headLines);
-                        companyModel.Links.Add(link);
-                        companyModel.HeadlinesSentiment.Add(new Sentence(headLines).Sentiment.ToString());
+                        if (strSenti.Equals("Negative"))
+                        {
+                            companyModel.Headlines.Add(headLines);
+                            companyModel.Links.Add(link);
+                            companyModel.HeadlinesSentiment.Add(strSenti);
+                        }
                     }
                 }
-                
+
             }
 
             companyModel.RiskScore = 123;
@@ -74,32 +79,33 @@
             companyModel.Headlines = new List<string>();
 
 
-            var strNewsUrl = "https://www.icij.org";
-            var strQuery = "/search/";
-            var strClientName = test;
+            var strNewsUrl = "https://www.google.com.ph";
+            var strQuery = "/search?q=";
+            var strClientName = test + " board of directors";
             var strUrl = strNewsUrl + strQuery + strClientName;
             HtmlWeb web = new HtmlWeb();
             var htmlDoc = web.Load(strUrl);
 
-            var strElement = "div";
-            var strCmpr = "title";
-            var xpath = $"//p[@class='Post__category']";
+            var xpath = $"//h3[@class='r']";
             var tests = htmlDoc.DocumentNode.InnerHtml;
             var results = htmlDoc.DocumentNode.SelectNodes(xpath);
-            
+
             if (results != null)
             {
-                var lstRes = results.Select(node => node.ChildNodes["a"]).ToList();
-                foreach (var res in lstRes)
-                {
-                    var headLines = res.ChildNodes["h3"].InnerText;
-                    var link = res.Attributes["href"].Value;
-                    link = link.Contains("http") ? link : strNewsUrl + link;
+                var res = results.Select(node => node.ChildNodes["a"]).FirstOrDefault();
 
-                    companyModel.Headlines.Add(headLines);
-                    companyModel.Links.Add(link);
-                    companyModel.HeadlinesSentiment.Add(new Sentence(headLines).Sentiment.ToString());
+                var str = res.Attributes["href"].Value;
+                var link = str.StartsWith("/url") ? StringUtil.FormatLink(str) : str;
+                link = link.Contains("http") ? link : strNewsUrl + link;
+                web = new HtmlWeb();
+                var htmlDoc2 = web.Load(link);
+
+                var nodes = htmlDoc2.DocumentNode.SelectNodes("//a");
+                foreach (var node in nodes)
+                {
+                    companyModel.Headlines.Add(node.InnerText);
                 }
+
             }
 
             companyModel.RiskScore = 123;
