@@ -19,7 +19,7 @@
             companyModel = new CompanyModel();
             searchSitesModel = new SearchSitesModel();
 
-            companyModel.CompanyName = name;
+            companyModel.CompanyName = name + " news";
             companyModel.Links = new List<string>();
             companyModel.HeadlinesSentiment = new List<string>();
             companyModel.Headlines = new List<string>();
